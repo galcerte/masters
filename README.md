@@ -1,4 +1,3 @@
-# masters
 These are the Python scripts I used to generate every graph in my master's
 thesis in physics, "The Scotogenic Model of Neutrino Masses and Dark Matter in Warped Extra Dimensions".
 Given that they were made and then extensively modified on short notice, they

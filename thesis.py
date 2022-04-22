@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.special as sp
 from scipy.optimize import fsolve
-from scipy import constants
+from scipy.constants import pi
 from scipy import integrate
 
 # This script has the contents of:
@@ -14,16 +14,17 @@ from scipy import integrate
 # Chapter 2 have not been included yet. This script produces all graphs found in Chapter 4 and
 # Chapter 5.
 
-pi = constants.pi
+# We will use natural units as usual, ħ = c = 1
+
 # The curvature and the value of krc are taken assuming gravitationally interacting
-# dark matter, something which requires a rather high DM mass (> 1 TeV, around 4-11 TeV)
+# dark matter (DM), something which requires a rather high DM mass (> 1 TeV, around 4-11 TeV)
 # and given LHC bounds on the KK-graviton, a smoothing of the hierarchy problem is implied
 # rather than a complete solution, so Lambda ~ 10 TeV.
-# AdS curvature, GeV
+
+# AdS curvature (GeV)
 k = 4.01577*(10**17)
-# k times r_c
+# k times r_c (dimensionless)
 krc = 32.7961/pi
-print(krc)
 # Compactification radius (GeV⁻¹)
 rc = krc/k
 # Planck scale (GeV)
@@ -32,6 +33,8 @@ MPl = 1.22*(10**19)
 MPlr = MPl/np.sqrt(8*pi)
 # Fundamental scale of gravity (GeV)
 M5 = np.cbrt( (k*(MPlr**2))/(1 - np.exp(-2*krc*pi)) )
+# Here we initialize where Yukawa interaction parameters will be stored
+h = np.ones((3, 3))
 # Scalar potential parameters (adimensional)
 lambda3 = 1
 lambda4 = 1
@@ -42,12 +45,14 @@ m2 = 3*(10**17)
 vev = 246.21965079413732
 # Order of Bessel functions
 v = np.sqrt((m2/k)**2 + 4)
+# Masses of fermionic singlets, in GeV
+M = np.array([10000, 15000, 20000])
 
 # We first define the corrections with respect to the (brane mass)-less terms,
 warp = np.exp(-krc*pi)
-correta = ((lambda3*(vev**2))/(4*k*M5))*np.exp(2*krc*constants.pi)
-corrr = (((lambda3 + lambda4 + lambda5)*(vev**2))/(4*k*M5))*np.exp(2*krc*constants.pi)
-corri = (((lambda3 + lambda4 - lambda5)*(vev**2))/(4*k*M5))*np.exp(2*krc*constants.pi)
+correta = ((lambda3*(vev**2))/(4*k*M5))*np.exp(2*krc*pi)
+corrr = (((lambda3 + lambda4 + lambda5)*(vev**2))/(4*k*M5))*np.exp(2*krc*pi)
+corri = (((lambda3 + lambda4 - lambda5)*(vev**2))/(4*k*M5))*np.exp(2*krc*pi)
 
 # We wish to find the roots of the expressions below,
 # which'll tell us the mass spectrums of the bulk scalars we consider.
@@ -67,15 +72,19 @@ def mass2(x):
 def massless(x):
     return (2*sp.jv(2, x) + x*sp.jvp(2, x, 1))*(2*sp.yv(2, warp*x) + warp*x*sp.yvp(2, warp*x, 1)) - (2*sp.yv(2, x) + x*sp.yvp(2, x, 1))*(2*sp.jv(2, warp*x) + warp*x*sp.jvp(2, warp*x, 1))
 
-# Use the numerical solver to find the roots
+# Charged eta boson
+# Here we have our guesses for the roots we want to find,
 x_init_guesseta = [4.66874849, 7.72492277, 10.7, 13.88, 16.988, 20.103, 23.22, 26.35, 29.5, 32.61, 35.7,
                    38.9, 42.01, 45.1, 48.28, 51.42, 54.56, 57.7, 60.84, 64, 67.11, 70.25, 73, 76]
+# We'll use fsolve(), a numerical solver, to find the roots
 x_rootseta = fsolve(masseta, x_init_guesseta)
 
+# Real, neutral eta boson
 x_init_guessr = [4.97, 8.07, 11.13, 14.19, 17.27, 20.35, 23.45, 26.55, 29.66, 32.78, 35.9, 39.02,
                  42.1, 45.28, 48.4, 51.42, 54.67, 57.8, 60.84, 64, 67.11, 70.25, 73, 76]
 x_rootsr = fsolve(massr, x_init_guessr)
 
+# Imaginary, neutral eta boson
 x_init_guessi = [4.97, 8.07, 11.13, 14.19, 17.27, 20.35, 23.45, 26.55, 29.66, 32.78, 35.9, 39.02,
                  42.1, 45.28, 48.4, 51.42, 54.67, 57.8, 60.84, 64, 67.11, 70.25, 73, 76]
 x_rootsi = fsolve(massi, x_init_guessi)
@@ -89,7 +98,7 @@ num_roots = np.shape(x_init_guess)[0]
 # is not finding the right root, it's solving the ones farther away,
 # like 79 instead of 72-73 and such.
 
-# Masses of the modes are in GeV
+# Masses of the modes (GeV)
 maetan       = k*x_rootseta*warp
 marn         = k*x_rootsr*warp
 main         = k*x_rootsi*warp
@@ -121,6 +130,7 @@ fetan   = np.zeros(num_roots)
 frn     = np.zeros(num_roots)
 fin     = np.zeros(num_roots)
 massmat = np.zeros((num_roots, num_roots))
+
 for i in index:
     # We first determine the normalization constant for each eta field,
     def wavefuncetan(phi):
@@ -138,6 +148,8 @@ for i in index:
     frn[i] = (1/nrn[i])*(sp.jv(v, (marn[i]/k)*np.exp(krc*pi)) + brnv[i]*sp.yv(v, (marn[i]/k)*np.exp(krc*pi)))
     fin[i] = (1/nin[i])*(sp.jv(v, (main[i]/k)*np.exp(krc*pi)) + binv[i]*sp.yv(v, (main[i]/k)*np.exp(krc*pi)))
     #fetan[i] = (1/netan[i])*(sp.jv(v, (metan[i]/k)*np.exp(krc*pi)))
+
+modes = np.linspace(0, num_roots - 1, num_roots, dtype=int)
 
 plt.subplots_adjust(left = 0.15, right = 0.96, top = 0.95, bottom = 0.11)
 plt.plot(modes, np.abs(maetan - marn)/(maetan + marn), '.', label=r'$|m_{\eta,n} - m_{R,n}|/(m_{\eta,n} + m_{R,n})$')
@@ -168,7 +180,6 @@ plt.clf()
 # Needed for correct spacing of plots to image border
 plt.subplots_adjust(left = 0.16, right = 0.98, top = 0.95, bottom = 0.11)
 
-modes = np.linspace(0, num_roots - 1, num_roots, dtype=int)
 plt.plot(modes, (fin - frn)/(10**(-17)), '.')
 # Axis labels
 plt.xlabel('KK-mode number', fontsize=13)
@@ -188,6 +199,8 @@ modes0 = np.linspace(0, num_roots - 1, num_roots, dtype=int)
 #plt.plot(modes, - sumand, '.', label="Mass matrix sumand")
 #plt.plot(modes, sumand2, '.')
 #print(sumand)
+
+index1 = np.linspace(0, 2, 3, dtype=int)
 Nwf = np.sqrt(krc/(2*(np.exp(krc*pi) - 1)))
 warp32 = np.exp(1.5*krc*pi)
 M5rc = M5*rc
@@ -224,8 +237,8 @@ indexlambda = np.linspace(0, 4, 5, dtype=int)
 lam5 = []
 l5 = np.array([1, 0.9, 0.8, 0.7, 0.6])
 for i in indexlambda:
-    corrr = (((lambda3 + lambda4 + l5[i])*(vev**2))/(4*k*M5))*np.exp(2*krc*constants.pi)
-    corri = (((lambda3 + lambda4 - l5[i])*(vev**2))/(4*k*M5))*np.exp(2*krc*constants.pi)
+    corrr = (((lambda3 + lambda4 + l5[i])*(vev**2))/(4*k*M5))*np.exp(2*krc*pi)
+    corri = (((lambda3 + lambda4 - l5[i])*(vev**2))/(4*k*M5))*np.exp(2*krc*pi)
     ass = k*fsolve(massr, x_init_guessr)*np.exp(-krc*pi)
     dicks = k*fsolve(massi, x_init_guessi)*np.exp(-krc*pi)
     lam5.append(np.abs(ass**2 - dicks**2))

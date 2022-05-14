@@ -17,10 +17,7 @@ and clarifications on concepts used in this work.
 of the previous documents.
 
 `thesis.py` and `slides.py` make various numerical calculations and generate graphs
-shown in the thesis and the defense's slides, respectively. Given that the
-Python scripts were made and then extensively modified on short notice, they
-are not in the best shape they could be. However, I will try to make them a bit
-more friendly to anyone else that's not me when I find the time.
+shown in the thesis and the defense's slides, respectively.
 
 ## Dependencies
 ### `Memoria.tex`
@@ -76,13 +73,15 @@ to call Biber and LuaLaTeX again like this.
 
 ## Future plans
 Now, the thesis itself is finished, so I will not add any new actual content
-(i.e. science). The place for that are further papers and a PhD, however I decided
-that, in the near future, I will not pursue a career in academia. If you
-wish to follow work on this or similar topics, I suggest you keep an eye on
-what my supervisors will publish.
+(i.e. science). Further research has its place in additional papers down the
+line, however I decided that, in the near future, I will not pursue a career in
+academia. If you wish to follow work on this or similar topics, I suggest you
+keep an eye on what my supervisors will publish.
 
 I am content with its formatting and the grade I got, however I still feel like
 I could do some tinkering with the "delivery". By this, I mean that I'm very
-intrigued by org-mode, and I might just end up reformatting this thesis
-into an org file with all the code I used in chunks. I also plan to clean up
-the scripts I used, as I said before.
+intrigued by org-mode, and I might just end up reformatting this thesis into an
+org file with all the code I used in chunks. I also plan to clean up the
+scripts I used, given that they were made and then extensively modified on
+short notice, so they are not in the best shape they could be. However, I
+will try to make them a bit more readable when I find the time.

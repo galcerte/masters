@@ -1,9 +1,4 @@
 # The Scotogenic Model of Neutrino Masses and Dark Matter in Warped Extra Dimensions
-This is my master's thesis in physics. This repository includes the LaTeX source file
-that compiles to the finished version of the thesis itself, as well as the software
-and other files required for numerical calculations and visualizations contained
-therein.
-
 ## Summary
 This Master's Thesis has, as a subject of study, the embedding of the scotogenic model, which
 explains the generation of neutrino masses and dark matter, in the context of the Randall-Sundrum
@@ -28,7 +23,7 @@ are not in the best shape they could be. However, I will try to make them a bit
 more friendly to anyone else that's not me when I find the time.
 
 ## Dependencies
-### Memoria.tex
+### `Memoria.tex`
 You will need LuaLaTeX, as well as the following packages:
 
 - `geometry`
@@ -49,8 +44,8 @@ You will need LuaLaTeX, as well as the following packages:
 - `physics`
 - `hyperref`
 
-### thesis.py
-You will need Python 3+, as well as the following libraries:
+### `thesis.py`
+You will need Python 3+, and the following libraries:
 
 - NumPy
 - SciPy
@@ -66,7 +61,7 @@ $ ./thesis.py
 ```
 
 then compile the LaTeX to a PDF. I used LuaLaTeX since I make heavy use of
-TikZ-Feynman, as this package is mostly written in Lua. To include the
+TikZ-Feynman, and this package is mostly written in Lua. To include the
 bibliography, I used Biber, so whenever I'd compile the thesis, I'd execute
 this,
 
@@ -76,5 +71,18 @@ $ biber
 $ lualatex Memoria.tex
 ```
 
-If references are not changed in the thesis itself, I believe it isn't necessary
-to call Biber again like this.
+If references are not changed in `Memoria.tex`, I believe it isn't necessary
+to call Biber and LuaLaTeX again like this.
+
+## Future plans
+Now, the thesis itself is finished, so I will not add any new actual content
+(i.e. science). The place for that are further papers and a PhD, however I decided
+that, in the near future, I will not pursue a career in academia. If you
+wish to follow work on this or similar topics, I suggest you keep an eye on
+what my supervisors will publish.
+
+I am content with its formatting and the grade I got, however I still feel like
+I could do some tinkering with the "delivery". By this, I mean that I'm very
+intrigued by org-mode, and I might just end up reformatting this thesis
+into an org file with all the code I used in chunks. I also plan to clean up
+the scripts I used, as I said before.

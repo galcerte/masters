@@ -1,10 +1,12 @@
 # The Scotogenic Model of Neutrino Masses and Dark Matter in Warped Extra Dimensions
-## Summary
-This Master's Thesis has, as a subject of study, the embedding of the scotogenic model, which
+## Abstract
+This master's thesis has, as a subject of study, the embedding of the scotogenic model, which
 explains the generation of neutrino masses and dark matter, in the context of the Randall-Sundrum
 scenario, where an extra compactified spacelike dimension is added to the usual Minkowski space. We
 shall start by briefly reviewing both of these known models as seen in the literature, before
 combining them and start to explore some of the implications of such an embedding.
+
+ELI12: What if we added a few new particles as well as an extra (spatial) dimension?
 
 ## File contents
 `Memoria.tex` is the main course, the thesis itself. It's probably going to be
@@ -50,17 +52,20 @@ You will need Python 3+, and the following libraries:
 
 ## Compiling
 In order to compile the thesis' PDF, it's necessary to come up with the various
-figures shown in it. So, first execute `thesis.py`,
+figures shown in it. So, first execute `thesis.py`
+(these commands are for Linux/BSD/Mac systems, but it's trivial to do the
+same on Windows)
 
 ```
+$ cd masters
 $ chmod +x thesis.py
 $ ./thesis.py
 ```
 
-then compile the LaTeX to a PDF. I used LuaLaTeX since I make heavy use of
-TikZ-Feynman, and this package is mostly written in Lua. To include the
-bibliography, I used Biber, so whenever I'd compile the thesis, I'd execute
-this,
+then compile the LaTeX to a PDF. You need to use LuaLaTeX in order to do this,
+since I made heavy use of [TikZ-Feynman](https://jpellis.me/projects/tikz-feynman/),
+and this package is mostly written in Lua. To include the bibliography, I used
+Biber, so whenever I'd compile the thesis, I'd execute this,
 
 ```
 $ lualatex Memoria.tex
@@ -79,9 +84,9 @@ academia. If you wish to follow work on this or similar topics, I suggest you
 keep an eye on what my supervisors will publish.
 
 I am content with its formatting and the grade I got, however I still feel like
-I could do some tinkering with the "delivery". By this, I mean that I'm very
-intrigued by org-mode, and I might just end up reformatting this thesis into an
-org file with all the code I used in chunks. I also plan to clean up the
-scripts I used, given that they were made and then extensively modified on
-short notice, so they are not in the best shape they could be. However, I
-will try to make them a bit more readable when I find the time.
+I could do some tinkering with the delivery. By this, I mean that I'm very
+intrigued by [Org-mode](https://orgmode.org/index.html), and I might just end
+up reformatting this thesis into an org file with all the code I used in
+chunks. I also plan to clean up the scripts I used, given that they were made
+and then extensively modified on short notice, so they are not in the best
+shape they could be.

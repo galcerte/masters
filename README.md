@@ -69,7 +69,7 @@ Biber, so whenever I'd compile the thesis, I'd execute this,
 
 ```
 $ lualatex Memoria.tex
-$ biber
+$ biber Memoria
 $ lualatex Memoria.tex
 ```
 
